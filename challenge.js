@@ -17,3 +17,23 @@ Test data:
 § Data 2: [16, 6, 10, 5, 6, 1, 4]
 */
 
+//calulcate dog age in human years
+
+const calcAverageHumanAge = function (dogsage) {
+  const humanYears = dogsage.map(dogAge => {
+    if (dogAge <= 2) return 2 * dogAge;
+    else return 16 + dogAge * 4;
+  });
+
+  const adultAge = humanYears.filter(dogAge => dogAge >= 18);
+
+//   console.log(adultAge);
+
+  const averageHumanAge =
+    adultAge.reduce((acc, cur) => acc + cur, 0) / adultAge.length;
+
+  console.log(averageHumanAge);
+};
+
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
