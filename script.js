@@ -83,13 +83,24 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+//Function to caluclate account balance using reduce method
+
+const calcDisplayBalance = function(movements){
+  //reduce : to caluclate balance 
+  const balance = movements.reduce((acc, mov) => acc + mov, 0)
+  //display balance 
+  labelBalance.textContent = `${balance} INR`
+}
+
+calcDisplayBalance(account1.movements)
+
 //Function to create usernames through owner property
 
-const username = account1.owner
-  .toLowerCase()
-  .split(' ')
-  .map(name => name[0])
-  .join('');
+// const username = account1.owner
+//   .toLowerCase()
+//   .split(' ')
+//   .map(name => name[0])
+//   .join('');
 
 const userNames = function (acc) {
   acc.forEach(function (user) {
@@ -103,7 +114,6 @@ const userNames = function (acc) {
 
 userNames(accounts);
 
-//test line of code
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -118,3 +128,45 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+//filter method
+
+const deposits = movements.filter( mov => mov > 0)
+console.log(deposits)
+
+//above example with for loop
+
+const depositsFor = [];  //initilize
+
+for(let mov of movements) if (mov > 0 ) depositsFor.push(mov)
+
+console.log(depositsFor)
+
+//challenge 
+
+const withdrawals = movements.filter(mov => mov < 0)
+console.log(withdrawals)
+
+//reduce method : acc -> SNOWBALL, array will be reduced into single value
+
+const balance = movements.reduce((acc, mov) => (acc + mov),0)
+console.log(balance)
+
+//above using for of loop
+
+let balance2 = 0
+for(let mov of movements){
+  balance2 += mov
+}
+console.log(balance2)
+
+//finding maximum value of an array using reduce method
+
+const maxValue = movements.reduce((acc, cur) => {
+  if(acc > cur)
+    return acc
+  else
+    return cur
+}, movements[0])
+
+console.log(maxValue)
