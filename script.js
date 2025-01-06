@@ -74,7 +74,7 @@ const displayMovements = function (movements) {
       index + 1
     } ${typeOfMovement}</div>
           <div class="movements__date">3 days ago</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov}₹</div>
         </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -85,14 +85,38 @@ displayMovements(account1.movements);
 
 //Function to caluclate account balance using reduce method
 
-const calcDisplayBalance = function(movements){
-  //reduce : to caluclate balance 
-  const balance = movements.reduce((acc, mov) => acc + mov, 0)
-  //display balance 
-  labelBalance.textContent = `${balance} INR`
-}
+const calcDisplayBalance = function (movements) {
+  //reduce : to caluclate balance
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  //display balance
+  labelBalance.textContent = `${balance}₹`;
+};
 
-calcDisplayBalance(account1.movements)
+calcDisplayBalance(account1.movements);
+
+//Function that displays transaction summary with the help of chaining array methods
+
+const calcSummaryValues = function (movements) {
+  const valueIn = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  labelSumIn.textContent = `${valueIn}₹`;
+
+  const valueOut = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  labelSumOut.textContent = `${Math.abs(valueOut)}₹`;
+
+  //intrest of 1.2% on every deposit (not happens in real world 🤣) : consider only the intrests which are greater than 1
+  const valueIntrest = movements
+    .filter(mov => mov > 0)
+    .map(mov => mov * (1.2 / 100))
+    .filter(mov => mov > 1)
+    .reduce((acc, cur) => acc + cur, 0);
+  labelSumInterest.textContent = `${valueIntrest}₹`;
+};
+
+calcSummaryValues(account1.movements);
 
 //Function to create usernames through owner property
 
@@ -114,7 +138,6 @@ const userNames = function (acc) {
 
 userNames(accounts);
 
-
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -129,6 +152,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+/*
 //filter method
 
 const deposits = movements.filter( mov => mov > 0)
@@ -170,3 +194,18 @@ const maxValue = movements.reduce((acc, cur) => {
 }, movements[0])
 
 console.log(maxValue)
+
+
+//convert the deposits to usd and caluclate sum of it
+//through chaining
+
+const INRTOUSD = 1 / 85;
+
+const balanceToUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * INRTOUSD)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(balanceToUSD);
+
+//NOTE : chaining affect on application performance, use only where needed
+*/
