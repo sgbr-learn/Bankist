@@ -208,4 +208,24 @@ const balanceToUSD = movements
 console.log(balanceToUSD);
 
 //NOTE : chaining affect on application performance, use only where needed
+
+
+//find method returns the first element that satisfys the condition
+
+const firstWithdrawal = movements.find(mov => mov < 0)
+console.log(movements)
+console.log(firstWithdrawal)
+
+const account = accounts.find(acc => acc.username === "jd")
+console.log(account)
+
+//above logic using for of loop
+
+let accountOne;
+for(let acc of accounts){
+  if(acc.username === "jd"){
+    accountOne = acc
+  }
+}
+console.log(accountOne)
 */
