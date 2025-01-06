@@ -19,6 +19,7 @@ Test data:
 
 //calulcate dog age in human years
 
+/*
 const calcAverageHumanAge = function (dogsage) {
   const humanYears = dogsage.map(dogAge => {
     if (dogAge <= 2) return 2 * dogAge;
@@ -33,6 +34,29 @@ const calcAverageHumanAge = function (dogsage) {
     adultAge.reduce((acc, cur) => acc + cur, 0) / adultAge.length;
 
   console.log(averageHumanAge);
+};
+
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+*/
+
+//challenge 3
+//convert the above functionality : chaining methods and using arrow function syntax
+
+const calcAverageHumanAge = ages => {
+  const averageAge =
+    ages
+      .map(dogAge => {
+        if (dogAge <= 2) return 2 * dogAge;
+        else return 16 + dogAge * 4;
+      })
+      .filter((dogAge, i, arr) => {
+        // console.log(arr);
+        return dogAge >= 18;
+      })
+      .reduce((acc, cur, i, arr) => acc + cur/arr.length, 0) 
+
+  console.log(averageAge);
 };
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
