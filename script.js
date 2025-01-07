@@ -85,11 +85,11 @@ const displayMovements = function (movements) {
 
 //Function to caluclate account balance using reduce method
 
-const calcDisplayBalance = function (movements) {
+const calcDisplayBalance = function (acc) {
   //reduce : to caluclate balance
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   //display balance
-  labelBalance.textContent = `${balance}₹`;
+  labelBalance.textContent = `${acc.balance}₹`;
 };
 
 // calcDisplayBalance(account1.movements);
@@ -109,7 +109,7 @@ const calcSummaryValues = function (acc) {
 
   //intrest of 1.2% on every deposit (not happens in real world 🤣) : consider only the intrests which are greater than 1
 
-  const rateOfIntrest = acc.interestRate
+  const rateOfIntrest = acc.interestRate;
 
   const valueIntrest = acc.movements
     .filter(mov => mov > 0)
@@ -141,13 +141,27 @@ const userNames = function (acc) {
 
 userNames(accounts);
 
+//Function to display UI
+function updateUI(acc){
+  //Display movements
+  displayMovements(acc.movements);
+  //Display Summary
+  calcSummaryValues(acc);
+  //Display balance
+  calcDisplayBalance(acc);
+}
+
 //Implementing login using find() method.
+
+//Current account
+
+let currentAccount
 
 btnLogin.addEventListener('click', function (event) {
   //preventing default behaviour that happens on clicking form button
   event.preventDefault();
 
-  let currentAccount = accounts.find(
+  currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
   // if (currentAccount && currentAccount.pin === Number(inputLoginPin.value)) : using short circuting
@@ -155,17 +169,44 @@ btnLogin.addEventListener('click', function (event) {
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     //Display UI and welcome message
     containerApp.style.opacity = 1;
-    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`
-    inputLoginPin.blur() //to remove cursor focus on pin
-    inputLoginUsername.value = ''
-    inputLoginPin.value = ''
-    //Display movements
-    displayMovements(currentAccount.movements)
-    //Display Summary
-    calcSummaryValues(currentAccount)
-    //Display balance
-    calcDisplayBalance(currentAccount.movements)
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    inputLoginPin.blur(); //to remove cursor focus on pin
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
+    
+    updateUI(currentAccount)
   }
+});
+
+//Implementing transfer
+
+btnTransfer.addEventListener('click', function (e) {
+  //prevent default behaviour
+  e.preventDefault();
+
+  //get the receiver account
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  // console.log(Number(inputTransferAmount.value), inputTransferTo.value);
+  let amount = Number(inputTransferAmount.value)
+  let user = inputTransferTo.value
+
+  //clear the transer inputs
+  inputTransferAmount.value = inputTransferTo.value = ''
+
+  //validate conditions : a.Transfer amount > 0, b.Self transfer is not valid, c.existance of receiver account, d.transfer amount <= users balance
+  if(amount > 0 && receiverAcc && currentAccount.balance >= amount && user !== currentAccount.username){
+    //add negative movement to current account
+    currentAccount.movements.push(-amount)
+    //add positive movement to receiver account
+    receiverAcc.movements.push(amount)
+  }
+
+  //reload the UI with updated details
+  updateUI(currentAccount)
 });
 
 /////////////////////////////////////////////////
