@@ -81,7 +81,7 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 //Function to caluclate account balance using reduce method
 
@@ -92,31 +92,34 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `${balance}₹`;
 };
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
 //Function that displays transaction summary with the help of chaining array methods
 
-const calcSummaryValues = function (movements) {
-  const valueIn = movements
+const calcSummaryValues = function (acc) {
+  const valueIn = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, cur) => acc + cur, 0);
   labelSumIn.textContent = `${valueIn}₹`;
 
-  const valueOut = movements
+  const valueOut = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, cur) => acc + cur, 0);
   labelSumOut.textContent = `${Math.abs(valueOut)}₹`;
 
   //intrest of 1.2% on every deposit (not happens in real world 🤣) : consider only the intrests which are greater than 1
-  const valueIntrest = movements
+
+  const rateOfIntrest = acc.interestRate
+
+  const valueIntrest = acc.movements
     .filter(mov => mov > 0)
-    .map(mov => mov * (1.2 / 100))
+    .map(mov => mov * (rateOfIntrest / 100))
     .filter(mov => mov > 1)
     .reduce((acc, cur) => acc + cur, 0);
   labelSumInterest.textContent = `${valueIntrest}₹`;
 };
 
-calcSummaryValues(account1.movements);
+// calcSummaryValues(account1.movements);
 
 //Function to create usernames through owner property
 
@@ -137,6 +140,33 @@ const userNames = function (acc) {
 };
 
 userNames(accounts);
+
+//Implementing login using find() method.
+
+btnLogin.addEventListener('click', function (event) {
+  //preventing default behaviour that happens on clicking form button
+  event.preventDefault();
+
+  let currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  // if (currentAccount && currentAccount.pin === Number(inputLoginPin.value)) : using short circuting
+  // below method written with the help of optional chaining => ?.
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //Display UI and welcome message
+    containerApp.style.opacity = 1;
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`
+    inputLoginPin.blur() //to remove cursor focus on pin
+    inputLoginUsername.value = ''
+    inputLoginPin.value = ''
+    //Display movements
+    displayMovements(currentAccount.movements)
+    //Display Summary
+    calcSummaryValues(currentAccount)
+    //Display balance
+    calcDisplayBalance(currentAccount.movements)
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
