@@ -209,7 +209,7 @@ btnTransfer.addEventListener('click', function (e) {
   updateUI(currentAccount)
 });
 
-//Close functionality using findIndex()
+//Close functionality using findIndex() : returns the index of the element we are searching for based on condition(first occurance)
 btnClose.addEventListener('click', function(event){
   event.preventDefault()
 
