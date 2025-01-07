@@ -209,6 +209,25 @@ btnTransfer.addEventListener('click', function (e) {
   updateUI(currentAccount)
 });
 
+//Close functionality using findIndex()
+btnClose.addEventListener('click', function(event){
+  event.preventDefault()
+
+  if(inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin){
+    //find the account to be deleted
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username)
+
+    //delete the account
+    accounts.splice(index,1)
+
+    //change the opacity
+    containerApp.style.opacity = 0
+
+    //clear the input fields
+    inputClosePin.value = inputCloseUsername.value = ''
+  }
+})
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
