@@ -318,4 +318,18 @@ for(let acc of accounts){
   }
 }
 console.log(accountOne)
+
+
+//findLast and findLastIndex
+
+console.log(movements)
+
+const latestWithdrawal = movements.findLast( mov => mov < 0)
+console.log(latestWithdrawal)
+
+//largest movement: movement amount greater than 2000(irrespective of deposit ot withdrawal)
+
+const lastestLargestMovementIndex = movements.findLastIndex(mov => Math.abs(mov) > 2000)
+console.log(lastestLargestMovementIndex)
+console.log(`Your largest movement was ${movements.length - lastestLargestMovementIndex} movements ago`)
 */
