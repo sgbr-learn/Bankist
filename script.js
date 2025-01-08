@@ -223,17 +223,17 @@ btnLoan.addEventListener('click', function (e) {
   //condtion
   if (
     currentAccount.movements.some(
-      mov => mov >= (Number(inputLoanAmount.value) * 0.1)
+      mov => mov >= Number(inputLoanAmount.value) * 0.1
     )
   ) {
     //deposit the amount to current account
-    currentAccount.movements.push(Number(inputLoanAmount.value))
+    currentAccount.movements.push(Number(inputLoanAmount.value));
   }
   //clear the input field
-  inputLoanAmount.value = ''
+  inputLoanAmount.value = '';
 
   //update the UI
-  updateUI(currentAccount)
+  updateUI(currentAccount);
 });
 
 //Close functionality using findIndex() : returns the index of the element we are searching for based on condition(first occurance)
