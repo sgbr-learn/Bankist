@@ -382,7 +382,7 @@ console.log(movements.some(mov => mov > 5000)) //false
 console.log(movements.every(mov => mov > 0)) //false
 console.log(account4.movements)
 console.log(account4.movements.every(mov => mov > 0)) //true
-*/
+
 
 //flat, flatMap methods
 
@@ -419,3 +419,4 @@ const totalBalance2 = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalBalance2);
+*/
