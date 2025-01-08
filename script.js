@@ -142,7 +142,7 @@ const userNames = function (acc) {
 userNames(accounts);
 
 //Function to display UI
-function updateUI(acc){
+function updateUI(acc) {
   //Display movements
   displayMovements(acc.movements);
   //Display Summary
@@ -155,7 +155,7 @@ function updateUI(acc){
 
 //Current account
 
-let currentAccount
+let currentAccount;
 
 btnLogin.addEventListener('click', function (event) {
   //preventing default behaviour that happens on clicking form button
@@ -175,8 +175,8 @@ btnLogin.addEventListener('click', function (event) {
     inputLoginPin.blur(); //to remove cursor focus on pin
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
-    
-    updateUI(currentAccount)
+
+    updateUI(currentAccount);
   }
 });
 
@@ -191,42 +191,74 @@ btnTransfer.addEventListener('click', function (e) {
     acc => acc.username === inputTransferTo.value
   );
   // console.log(Number(inputTransferAmount.value), inputTransferTo.value);
-  let amount = Number(inputTransferAmount.value)
-  let user = inputTransferTo.value
+  let amount = Number(inputTransferAmount.value);
+  let user = inputTransferTo.value;
 
   //clear the transer inputs
-  inputTransferAmount.value = inputTransferTo.value = ''
+  inputTransferAmount.value = inputTransferTo.value = '';
 
   //validate conditions : a.Transfer amount > 0, b.Self transfer is not valid, c.existance of receiver account, d.transfer amount <= users balance
-  if(amount > 0 && receiverAcc && currentAccount.balance >= amount && user !== currentAccount.username){
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    user !== currentAccount.username
+  ) {
     //add negative movement to current account
-    currentAccount.movements.push(-amount)
+    currentAccount.movements.push(-amount);
     //add positive movement to receiver account
-    receiverAcc.movements.push(amount)
+    receiverAcc.movements.push(amount);
   }
 
   //reload the UI with updated details
+  updateUI(currentAccount);
+});
+
+//Loan transfer feature using some() method
+//Our bank grants loan only if there is any deposit exisists which should be greater than or equal to 10% of loan amount
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  //condtion
+  if (
+    currentAccount.movements.some(
+      mov => mov >= (Number(inputLoanAmount.value) * 0.1)
+    )
+  ) {
+    //deposit the amount to current account
+    currentAccount.movements.push(Number(inputLoanAmount.value))
+  }
+  //clear the input field
+  inputLoanAmount.value = ''
+
+  //update the UI
   updateUI(currentAccount)
 });
 
 //Close functionality using findIndex() : returns the index of the element we are searching for based on condition(first occurance)
-btnClose.addEventListener('click', function(event){
-  event.preventDefault()
+btnClose.addEventListener('click', function (event) {
+  event.preventDefault();
 
-  if(inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin){
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
     //find the account to be deleted
-    const index = accounts.findIndex(acc => acc.username === currentAccount.username)
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
 
     //delete the account
-    accounts.splice(index,1)
+    accounts.splice(index, 1);
 
     //change the opacity
-    containerApp.style.opacity = 0
+    containerApp.style.opacity = 0;
 
     //clear the input fields
-    inputClosePin.value = inputCloseUsername.value = ''
+    inputClosePin.value = inputCloseUsername.value = '';
   }
-})
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
