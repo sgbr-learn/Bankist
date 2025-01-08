@@ -332,4 +332,22 @@ console.log(latestWithdrawal)
 const lastestLargestMovementIndex = movements.findLastIndex(mov => Math.abs(mov) > 2000)
 console.log(lastestLargestMovementIndex)
 console.log(`Your largest movement was ${movements.length - lastestLargestMovementIndex} movements ago`)
+
+
+//some and every
+
+console.log(movements)
+
+//checks for equality: returns true if movements array contains 3000 otherwise false
+console.log(movements.includes(3000))
+
+//some: can be used to check condition and returns single boolean
+console.log(movements.some(mov => mov === 3000)) //implementing includes() method
+console.log(movements.some(mov => mov > 0)) //true
+console.log(movements.some(mov => mov > 5000)) //false
+
+//every: as name suggests, every element in the array must satisfy the condition for true and returns boolean values
+console.log(movements.every(mov => mov > 0)) //false
+console.log(account4.movements)
+console.log(account4.movements.every(mov => mov > 0)) //true
 */
