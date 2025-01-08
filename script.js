@@ -383,3 +383,39 @@ console.log(movements.every(mov => mov > 0)) //false
 console.log(account4.movements)
 console.log(account4.movements.every(mov => mov > 0)) //true
 */
+
+//flat, flatMap methods
+
+const array = [[1, 2, 3], 4, [5, 6, 7], [8, 9]];
+console.log(array.flat()); //[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+const array1 = [[1, 2, [3, 4], 5], 6, [7, [8, 9]], 10];
+console.log(array1.flat(1)); //[1, 2, Array(2), 5, 6, 7, Array(2), 10]
+console.log(array1.flat(2)); //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+//find total balance from all accounts
+const accountsMovement = accounts.map(acc => acc.movements); //returns array of movements
+
+const flattenedAccountMovements = accountsMovement.flat(); //flatens it into single array
+
+const totalBalance = flattenedAccountMovements.reduce(
+  (acc, mov) => acc + mov,
+  0
+);
+
+console.log(totalBalance);
+
+//above can be done via methods chaining as well
+
+const totalBalance1 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalBalance1);
+
+//flatMap: combination of flat and map, resultant flat can be of depth 1, we can't modify the depth in flatMap().
+
+const totalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalBalance2);
