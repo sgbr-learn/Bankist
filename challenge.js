@@ -179,9 +179,7 @@ YOUR TASKS:
 BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT: Use the "Math.max" method along with the ... operator.
 
 TEST DATA:
-*/
 
-/*
 const breeds = [
   {
     breed: 'German Shepherd',
@@ -219,4 +217,40 @@ const breeds = [
     activities: ['agility', 'fetch'],
   },
 ];
+
+//1.
+const huskyWeight = breeds.find(br => br.breed === 'Husky').averageWeight;
+
+//2.
+const dogBothActivities = breeds.find(
+  breed =>
+    breed.activities.includes('running') && breed.activities.includes('fetch')
+).breed;
+
+//3.
+const allActivities = breeds.flatMap(breed => breed.activities);
+
+//4.
+const uniqueActivities = new Set(allActivities);
+
+//5.
+const swimmingAdjacent = breeds
+  .filter(breed => breed.activities.includes('swimming'))
+  .flatMap(breed => breed.activities)
+  .filter((act, i, arr) => {
+    // console.log(arr)
+    return act !== 'swimming'});  //added few extra parameters on filter for debugging purpose
+
+//6.
+const averageWeight10 = breeds.every(breed => breed.averageWeight > 10)
+
+//7.
+const activeBreed = breeds.some(breed => breed.activities.length === 3)
+
+//Bonus
+const averageWeightFetch = breeds
+  .filter(breed => breed.activities.includes('fetch')).map(breed => breed.averageWeight)
+
+const maxAverageWeightFetch = Math.max(...averageWeightFetch)
+
 */
