@@ -553,4 +553,61 @@ console.log(movements)
 //original array deosn't change
 console.log(movements.with(1, 30))
 console.log(movements)
+
+//Array methods (practice)
+
+//1.
+const bankDepositSum = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .filter(mov => mov > 0)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(bankDepositSum);
+
+//2.
+const deposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+console.log(deposits1000);
+//using reduce() method
+const numDeposits = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, cur) => (cur >= 1000 ? acc + 1 : acc), 0);
+console.log(numDeposits);
+
+//prefix ++ operator
+let a = 10;
+// console.log(++a) //increment and print
+console.log(a++); //print and increment
+console.log(a);
+
+//3. Create an Object that contains properties named deposits and withdraw with values as total deposits and withdrawals
+//using reduce method
+const { deposit, withdrwal } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sum, cur) => {
+      // cur > 0 ? sum.deposit += cur : sum.withdrwal += cur
+      sum[cur > 0 ? 'deposit' : 'withdrwal'] += cur;
+      return sum;
+    },
+    { deposit: 0, withdrwal: 0 }
+  );
+console.log(deposit, withdrwal);
+
+//4.
+const str = 'this is a title case'; //should be: "This Is a Title Case"
+const convertToTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'with', 'in', 'and'];
+  return title
+    .toLowerCase()
+    .split(' ')
+    .map(word =>
+      exceptions.includes(word)
+        ? word
+        : word.replace(word[0], word[0].toUpperCase())
+    )
+    .join(' ')
+};
+
 */
