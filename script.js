@@ -62,8 +62,11 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 //Function to display movements
+//creating state variable to keep track of sorting(true or false)
 
-const displayMovements = function (movements) {
+let sorted = false;
+
+const displayMovements = function (movements, sorted = false) {
   containerMovements.innerHTML = '';
   movements.forEach((mov, index) => {
     const typeOfMovement = mov > 0 ? 'deposit' : 'withdrawal';
@@ -234,6 +237,17 @@ btnLoan.addEventListener('click', function (e) {
 
   //update the UI
   updateUI(currentAccount);
+});
+
+//Implementation of sorting using array.sort() method on movements.
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  sorted = !sorted;
+  //this will mutate the original array, take a copy before performing the sorting
+  let movs = sorted
+    ? currentAccount.movements.slice().sort((a, b) => a - b)
+    : currentAccount.movements;
+  displayMovements(movs, sorted);
 });
 
 //Close functionality using findIndex() : returns the index of the element we are searching for based on condition(first occurance)
