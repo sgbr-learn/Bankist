@@ -136,15 +136,19 @@ if (sarahsDog.curFood > recommendedMaxConsumption) {
 //3.
 
 const ownersEatTooMuch = dogs
-  .filter(dog => dog.curFood >= dog.recommendedFood * 1.1)
+  .filter(dog => dog.curFood > dog.recommendedFood)
   .map(dog => dog.owners)
   .flat();
 const ownersEatTooLittle = dogs
-  .filter(dog => dog.curFood <= dog.recommendedFood * 0.9)
+  .filter(dog => dog.curFood < dog.recommendedFood)
   .map(dog => dog.owners)
   .flat();
 
 console.log(ownersEatTooLittle, ownersEatTooMuch);
+
+//4.
+console.log(`${ownersEatTooMuch.join(' and ')} dog's eat too much`)
+console.log(`${ownersEatTooLittle.join(' and ')} dog's eat too little`)
 
 //5.
 const exactConsuption = dogs.some(dog => dog.curFood === dog.recommendedFood);
@@ -160,7 +164,14 @@ console.log(okayConsumptionDogs)
 
 //8.
 // const dogsCopy = [...dogs]
-const dogsCopy = dogs.slice()
+const sortedDogs = dogs.toSorted((a,b) => a.recommendedFood - b.recommendedFood)
+console.log(sortedDogs)
+
+//9.group dogs with number of ownwers
+const numOwners = Object.groupBy(dogs, (dog)=>{
+  return `${dog.owners.length}-owners`
+})
+console.log(numOwners)
 */
 
 //Challenge 4 -> complete this first
