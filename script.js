@@ -419,4 +419,40 @@ const totalBalance2 = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalBalance2);
+
+//sorting: mutates the original array
+
+const names = ['sanjay', 'abhi', 'shravya', 'neha', 'vishwa'];
+console.log(names);
+names.sort();
+console.log(names);
+
+//sorting numbers: have to use compare function as callback
+// const arr = [3, 4, 5, 1, 7];
+console.log(movements);
+
+//NOTE
+//return > 0 ,A, B (switch the order)
+//return < 0, A, B (Keep the order)
+
+//Ascending
+movements.sort((a, b) => {
+  if (a > b) {
+    return 1;
+  }
+  if (a < b) {
+    return -1;
+  }
+});
+// console.log(movements);
+
+// console.log(movements.sort((a, b) => a - b));
+
+//Decending
+movements.sort((a, b) => {
+  if (b > a) return 1;
+  if (b < a) return -1;
+});
+// console.log(movements);
+// console.log(movements.sort((a, b) => b - a));
 */
