@@ -10,7 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
-  type: 'premium'
+  type: 'premium',
 };
 
 const account2 = {
@@ -18,7 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
-  type:'basic'
+  type: 'basic',
 };
 
 const account3 = {
@@ -26,7 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
-  type:'standard'
+  type: 'standard',
 };
 
 const account4 = {
@@ -34,7 +34,7 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
-  type:'basic'
+  type: 'basic',
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -473,14 +473,13 @@ movements.sort((a, b) => {
 });
 // console.log(movements);
 // console.log(movements.sort((a, b) => b - a));
-*/
 
 //Array grouping: new feature added in es2024, groups of array can be created based on conditions
 //returns object woth groups of arrays, based on criteria they met
 
 console.log(movements);
 
-//grouping based on type of movement
+//grouping based on type of movement, args: arr, callback fn
 const groupTypeMovement = Object.groupBy(movements, mov =>
   mov > 0 ? 'deosit' : 'withdrawal'
 );
@@ -500,3 +499,43 @@ console.log(groupByMovements)
 //add some property(type) to account now group them by property: added for demonstartion purpose(also most used in real world)
 const groupByTypeOfAccount = Object.groupBy(accounts, ({ type }) => type) //using destructing
 console.log(groupByTypeOfAccount)
+
+//Creating array programatically
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+const arr1 = new Array(1, 2, 3, 4, 5, 6, 7);
+console.log(arr, arr1);
+
+const arr3 = new Array(7); //creates empty array with 7 empty elements and no array methods like, map, filter etc deosn't work
+console.log(arr3);
+
+//fill: fills the element, mutates the array
+console.log(arr3.fill(3, 1, 4)); //args: value, start, end
+//op: [empty, 3, 3, 3, empty × 3]
+
+console.log(arr3.fill(4, 5)); //if end not specified, array will be filled with value from start, until end
+//op: [empty, 3, 3, 3, empty, 4, 4]
+
+//ArrayConstructor.from(): used to create array from other iterables like, set, map..
+//ars: length, callback => callbackfn args: val, index, arr
+const y = Array.from({ length: 5 }, (_, i) => i + 1);
+console.log(y);
+
+//new Array(7).fill(1)
+const a = Array.from({ length: 7 }, () => 1);
+console.log(a);
+
+//Array.from(): convert nodelist to array
+labelBalance.addEventListener('click', function () {
+  const balance = Array.from(
+    document.querySelectorAll('.movements__value'),
+    ele => Number(ele.textContent.replace('₹', ''))
+  );
+  console.log(balance);
+});
+
+//populate 100 random dice values
+const randomValues = Array.from({length : 100}, () => Math.floor((Math.random() * 6) + 1))
+console.log(new Set(randomValues))
+console.log(randomValues)
+*/
