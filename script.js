@@ -538,4 +538,19 @@ labelBalance.addEventListener('click', function () {
 const randomValues = Array.from({length : 100}, () => Math.floor((Math.random() * 6) + 1))
 console.log(new Set(randomValues))
 console.log(randomValues)
+
+//Non destrutive alternatives: prevents mutating original array
+//reverse-> toReversed , sort-> toSorted, splice-> toSpliced 
+
+console.log(movements)
+console.log(movements.toReversed())
+console.log(movements)
+
+movements[1] = 2000 //mutates the original array
+console.log(movements)
+
+//with :args(index, value) 
+//original array deosn't change
+console.log(movements.with(1, 30))
+console.log(movements)
 */
