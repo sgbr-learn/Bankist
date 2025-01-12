@@ -10,6 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  type: 'premium'
 };
 
 const account2 = {
@@ -17,6 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  type:'basic'
 };
 
 const account3 = {
@@ -24,6 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  type:'standard'
 };
 
 const account4 = {
@@ -31,6 +34,7 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  type:'basic'
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -470,3 +474,29 @@ movements.sort((a, b) => {
 // console.log(movements);
 // console.log(movements.sort((a, b) => b - a));
 */
+
+//Array grouping: new feature added in es2024, groups of array can be created based on conditions
+//returns object woth groups of arrays, based on criteria they met
+
+console.log(movements);
+
+//grouping based on type of movement
+const groupTypeMovement = Object.groupBy(movements, mov =>
+  mov > 0 ? 'deosit' : 'withdrawal'
+);
+console.log(groupTypeMovement);
+//output: {deosit: Array(5), withdrawal: Array(3)}
+
+//grouping accounts based on number of movements
+const groupByMovements = Object.groupBy(accounts, ({ movements }) => {
+  if (movements.length >= 8) return 'Highly active';
+  if (movements.length >= 5) return 'Active';
+  if (movements.length >= 1) return 'Moderate';
+  return 'In active';
+});
+console.log(groupByMovements)
+//output: {Highly active: Array(3), Active: Array(1)}
+
+//add some property(type) to account now group them by property: added for demonstartion purpose(also most used in real world)
+const groupByTypeOfAccount = Object.groupBy(accounts, ({ type }) => type) //using destructing
+console.log(groupByTypeOfAccount)
